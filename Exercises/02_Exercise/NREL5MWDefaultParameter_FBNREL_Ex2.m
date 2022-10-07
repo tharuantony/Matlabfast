@@ -35,6 +35,8 @@ Parameter.VSC.P_a_rated                 = P_el_rated/Parameter.Generator.eta_el;
 Parameter.VSC.M_g_rated                 = Parameter.VSC.P_a_rated/Omega_g_rated;   % [Nm] 
 c_P_optmax                              = max(c_P(:,1)); 
 lambda_optmax                           = lambda(100);
+c_P_opt1 =c_P_opt * 0.99;
+
 % region limits & region parameters based on Jonkman 2009
 Parameter.VSC.Omega_g_1To1_5            = rpm2radPs(670);                   % [rad/s]
 Parameter.VSC.Omega_g_1_5To2            = rpm2radPs(871);                   % [rad/s]
