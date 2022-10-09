@@ -39,7 +39,6 @@ sim('NREL5MW_FBNREL_SLOW1DOF_Ex2.mdl')
 %% PostProcessing SLOW
 figure
 
-
 % plot wind
 subplot(411)
 hold on;box on;grid on;
@@ -65,9 +64,8 @@ plot(tout,logsout.get('y').Values.lambda.Data)
 ylabel('\lambda [-]')
 xlabel('time [s]')
 
-
-
 %% PostProcessing FAST
+OutputFile  = 'FAST/TorqueControllerTest.out';
 fid         = fopen(OutputFile);
 formatSpec  = repmat('%f',1,10);
 FASTResults = textscan(fid,formatSpec,'HeaderLines',8);
@@ -75,9 +73,45 @@ Time        = FASTResults{:,1};
 Wind1VelX   = FASTResults{:,2};
 RotSpeed    = FASTResults{:,4};
 GenPwr      = FASTResults{:,9};
+GenTrq      = FASTResults{:,10};
 fclose(fid);
 
-%% Compare Results
-fprintf('Time Ratio SLOW (Sim/CPU): %f\n',TimeRatio)
-
+%% Comparison SLOW-FAST
 figure
+
+% plot wind
+subplot(411)
+hold on;box on;grid on;
+plot(Time,Wind1VelX)
+plot(tout,logsout.get('d').Values.v_0.Data)
+ylabel('wind speed [m/s]')
+
+% plot generator torque
+subplot(412)
+hold on;box on;grid on;
+plot(Time,GenTrq)
+plot(tout,logsout.get('u').Values.M_g_c.Data/1e3) % 
+ylabel('Generator torque [kNm]')
+legend({'FAST','SLOW'},'location','best')
+
+% plot rotor speed
+subplot(413)
+hold on;box on;grid on;
+plot(Time,RotSpeed)
+plot(tout,logsout.get('y').Values.Omega.Data/2/pi*60) % rad/s to rpm
+ylabel('rotor speed [rpm]')
+legend({'FAST','SLOW'},'location','best')
+
+% plot Power
+Omega = logsout.get('y').Values.Omega.Data;
+M_g = logsout.get('u').Values.M_g_c.Data;
+eta_el = 0.944;
+i_GB = 97;
+P_el = Omega.*97.*M_g.*eta_el;        % electrical power ;
+subplot(414)
+hold on;box on;grid on;
+plot(Time,GenPwr/10^3)
+plot(tout,P_el/10^6) 
+ylabel('Power [MW]')
+xlabel('time [s]')
+legend({'FAST','SLOW'},'location','best')
