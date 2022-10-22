@@ -27,9 +27,9 @@ False         PtfmYDOF    - Platform yaw rotation DOF (flag)
 ---------------------- INITIAL CONDITIONS --------------------------------------
 1.244	OoPDefl     - Initial out-of-plane blade-tip displacement (meters)
 -0.463	IPDefl      - Initial in-plane blade-tip deflection (meters)
-17.474	BlPitch(1)  - Blade 1 initial pitch (degrees)
-17.474	BlPitch(2)  - Blade 2 initial pitch (degrees)
-17.474	BlPitch(3)  - Blade 3 initial pitch (degrees) [unused for 2 blades]
+22.3452	BlPitch(1)  - Blade 1 initial pitch (degrees)
+22.3452	BlPitch(2)  - Blade 2 initial pitch (degrees)
+22.3452	BlPitch(3)  - Blade 3 initial pitch (degrees) [unused for 2 blades]
           0   TeetDefl    - Initial or fixed teeter angle (degrees) [unused for 3 blades]
           0   Azimuth     - Initial azimuth angle for blade 1 (degrees)
 12.100	RotSpeed    - Initial or fixed rotor speed (rpm)
